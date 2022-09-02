@@ -12,5 +12,6 @@ yarn-error.log*
 output/*
 
 .env
+doctor-digi-361321-527afd93a48c.json
 
 .DS_Store
