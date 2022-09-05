@@ -75,7 +75,7 @@ for filename in filenames:
     # subprocess.run(["cd " + pre_filename, "ffmpeg -i %05d.png output.webm"])
     # ffmpeg -i video.mp4 -f mp3 -ab 192000 -vn music.mp3
     os.system("ffmpeg -i " + filename + " -f mp3 -ab 192000 -vn " + pre_filename + ".mp3")
-    os.system("ffmpeg -framerate 30 -i " + "./" + pre_filename + "/" +  "%05d.png -i " + pre_filename + ".mp3 -strict -2 -c:v libvpx -pixel_format yuva420 -auto-alt-ref 0 " + pre_filename + ".webm")
+    os.system("ffmpeg -framerate 30 -i " + "./" + pre_filename + "/" +  "%05d.png -i " + pre_filename + ".mp3 -strict -2 " + pre_filename + ".webm")
 
     # print(return_frames)
 

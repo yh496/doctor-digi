@@ -9,7 +9,7 @@ const Main = () => {
       <video
         width="960px"
         height="540px"
-        src="/idle.webm"
+        src="/digi_videos/idle_v1.webm"
         autoPlay
         loop
         muted
