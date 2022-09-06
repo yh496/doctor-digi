@@ -1,18 +1,7 @@
 import Styles from "./choices.module.css";
 
 const Choices = (props) => {
-  const { scenario, depth, choicesRef, ...rest } = props;
-
-  const scenarioDepthChoices = {
-    0: {
-      0: ["Schedule an Appointment", "Check Symptoms", "Get OTC Drug Info"],
-    },
-    1: {
-      1: [],
-    },
-  };
-
-  let choices = scenarioDepthChoices[scenario][depth];
+  const { choices, choicesRef, ...rest } = props;
 
   return (
     <div className={Styles.choiceContainer} ref={choicesRef}>

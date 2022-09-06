@@ -10,6 +10,12 @@ import { getNextResponse } from "../../lib/ResponseGenerator";
 import AudioStreamer from "../../lib/AudioHandler";
 
 const Main = () => {
+  const videoRef = useRef();
+  const choicesRef = useRef();
+  let videoElement = videoRef.current;
+  let choicesElement = choicesRef.current;
+
+
   const [startDigi, setStartDigi] = useState(false);
 
   const [responseTrigger, setResponseTrigger] = useState(false);
@@ -17,18 +23,15 @@ const Main = () => {
 
   const [scenario, setScenario] = useState("start");
   const [depth, setDepth] = useState(0);
-  const videoRef = useRef();
-  const choicesRef = useRef();
-  let videoElement = videoRef.current;
-  let choicesElement = choicesRef.current;
-  const [videoUrl, setVideoUrl] = useState(
-    "/digi_videos/starters/starter1.webm"
-  );
+
+  const [videoUrl, setVideoUrl] = useState("/digi_videos/starters/starter1.webm");
+
   const [sttResponse, setSttResponse] = useState("");
+  const [choices, setChoices] = useState(["Schedule an Appointment", "Check Symptoms", "Drug Info"]);
 
   useEffect(() => {
     if (sttResponse) {
-      const { nextScenario, nextDepth, video } = getNextResponse({
+      const { nextScenario, nextDepth, video, nextChoices } = getNextResponse({
         scenario,
         depth,
         response: sttResponse,
@@ -36,10 +39,10 @@ const Main = () => {
       setScenario(nextScenario);
       setDepth(nextDepth);
       onVideoChange(video);
+      setChoices(nextChoices);
     }
   }, [responseTrigger]);
 
-  console.log('sttResponse settt', sttResponse)
   useEffect(() => {
     videoElement = videoRef.current;
     choicesElement = choicesRef.current;
@@ -63,10 +66,8 @@ const Main = () => {
       }, 100);
     }
   };
-
   
   const recordingCallback = (sttResponse) => {
-    console.log("sttResponse", sttResponse);
     setSttResponse(sttResponse);
     setResponseTrigger(!responseTrigger)
   };
@@ -103,7 +104,7 @@ const Main = () => {
             autoPlay
             ref={videoRef}
           />
-          <Choices scenario={0} depth={0} choicesRef={choicesRef} />
+          {choices.length > 0 && <Choices choices={choices} choicesRef={choicesRef} />}
         </div>
       )}
     </div>
