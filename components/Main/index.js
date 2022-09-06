@@ -36,10 +36,19 @@ const Main = () => {
         depth,
         response: sttResponse,
       });
-      setScenario(nextScenario);
-      setDepth(nextDepth);
-      onVideoChange(video);
-      setChoices(nextChoices);
+
+      if (nextScenario) {
+        setScenario(nextScenario);
+      }
+      if (nextDepth) {
+        setDepth(nextDepth);
+      }
+      if (video) {
+        onVideoChange(video);
+      }
+      if (nextChoices) {
+        setChoices(nextChoices);
+      }
     }
   }, [responseTrigger]);
 
@@ -49,6 +58,8 @@ const Main = () => {
   }, []);
 
   const onVideoChange = (url) => {
+
+    console.log("urllll", url)
     if (videoElement) {
       videoElement = videoRef.current;
       videoElement.style = "";
@@ -69,6 +80,9 @@ const Main = () => {
           choicesElement.style.transitionDuration = "1.5s";
         }
       }, 100);
+      AudioStreamer.stopRecording()
+      videoElement.play()
+
     }
   };
   
