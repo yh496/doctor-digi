@@ -63,10 +63,12 @@ const Main = () => {
     choicesElement = choicesRef.current;
   }, []);
 
-  const onVideoChange = (url, idle=0) => {
-    setVideoLoop(false)
+  const onVideoChange = (url, idle = 0) => {
+    setVideoLoop(false);
+    videoElement = videoRef.current;
+    choicesElement = choicesRef.current;
+
     if (videoElement) {
-      videoElement = videoRef.current;
       videoElement.style = "";
       if (choices?.length > 0) {
         choicesElement.style = "";
@@ -85,9 +87,8 @@ const Main = () => {
           choicesElement.style.transitionDuration = idle ? "1s" : "1.5s";
         }
       }, 100);
-      AudioStreamer.stopRecording()
-      videoElement.play()
-
+      AudioStreamer.stopRecording();
+      videoElement.play();
     }
   };
 
