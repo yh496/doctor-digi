@@ -12,6 +12,11 @@
 
 }
 
+.digiContainer {
+    position: relative;
+}
+
+
 /* .doctorContainer { 
     display: flex;
     flex-direction: row; 

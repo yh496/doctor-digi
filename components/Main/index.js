@@ -4,11 +4,16 @@ import Styles from "./main.module.css";
 import RecordAudio from "../RecordAudio";
 import NextResponse from "../NextResponse";
 
+import Start from "../Start";
+import Choices from "../Choices";
+
 const Main = () => {
+  const [startDigi, setStartDigi] = useState(false);
   const videoRef = React.useRef();
   let videoElement = videoRef.current;
-  const [videoUrl, setVideoUrl] = useState("/digi_videos/idle_v1.webm");
-  const [videoTransitionDuration, setVideoTransitionDuration] = useState(0);
+  const [videoUrl, setVideoUrl] = useState(
+    "/digi_videos/starters/starter1.webm"
+  );
 
   useEffect(() => {
     videoElement = videoRef.current;
@@ -20,30 +25,32 @@ const Main = () => {
 
   return (
     <div className={Styles.mainContainer}>
-      <video
-        width="960px"
-        height="540px"
-        src={videoUrl}
-        autoPlay
-        loop
-        ref={videoRef}
-        style={{
-          opacity: 1,
-          transitionProperty: "all",
-          transitionDuration: videoTransitionDuration,
-          position: "absolute",
-          left: 250,
-          zIndex: 1,
-          bottom: 100,
-        }}
-      />
+      {!startDigi ? (
+        <Start
+          onClick={() => {
+            setStartDigi(true);
+          }}
+        />
+      ) : (
+        <div className={Styles.digiContainer}>
+          <video
+            className={Styles.video}
+            width="960px"
+            height="540px"
+            src={videoUrl}
+            autoPlay
+            ref={videoRef}
+          />
+          <Choices scenario={0} depth={0} />
 
-      <RecordAudio />
-      <NextResponse
-        videoRef={videoRef}
-        src={videoUrl}
-        onVideoChange={onVideoChange}
-      />
+          <RecordAudio />
+          <NextResponse
+            videoRef={videoRef}
+            src={videoUrl}
+            onVideoChange={onVideoChange}
+          />
+        </div>
+      )}
     </div>
   );
 };
