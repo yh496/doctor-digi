@@ -11,6 +11,8 @@ import AudioStreamer from "../../lib/AudioHandler";
 
 const Main = () => {
   const [startDigi, setStartDigi] = useState(false);
+
+  const [responseTrigger, setResponseTrigger] = useState(false);
   const [recording, setRecording] = useState(false);
 
   const [scenario, setScenario] = useState("start");
@@ -35,12 +37,13 @@ const Main = () => {
       setDepth(nextDepth);
       onVideoChange(video);
     }
-  }, [sttResponse]);
+  }, [responseTrigger]);
 
+  console.log('sttResponse settt', sttResponse)
   useEffect(() => {
     videoElement = videoRef.current;
     choicesElement = choicesRef.current;
-  });
+  }, []);
 
   const onVideoChange = (url) => {
     if (videoElement) {
@@ -61,9 +64,11 @@ const Main = () => {
     }
   };
 
+  
   const recordingCallback = (sttResponse) => {
     console.log("sttResponse", sttResponse);
     setSttResponse(sttResponse);
+    setResponseTrigger(!responseTrigger)
   };
 
   function startRecording() {
