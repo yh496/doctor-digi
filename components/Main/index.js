@@ -52,17 +52,22 @@ const Main = () => {
     if (videoElement) {
       videoElement = videoRef.current;
       videoElement.style = "";
-      choicesElement.style = "";
+      if (choices.length > 0) {
+        choicesElement.style = "";
+        choicesElement.style.opacity = 0;
+        choicesElement.style.transitionDuration = 0;
+      }
       videoElement.style.opacity = 0;
       videoElement.style.transitionDuration = 0;
-      choicesElement.style.opacity = 0;
-      choicesElement.style.transitionDuration = 0;
+      
       setVideoUrl(url);
       setTimeout(() => {
         videoElement.style.opacity = 1;
         videoElement.style.transitionDuration = "1.5s";
-        choicesElement.style.opacity = 1;
-        choicesElement.style.transitionDuration = "1.5s";
+        if (choices.length > 0) {
+          choicesElement.style.opacity = 1;
+          choicesElement.style.transitionDuration = "1.5s";
+        }
       }, 100);
     }
   };
@@ -104,7 +109,7 @@ const Main = () => {
             autoPlay
             ref={videoRef}
           />
-          {choices.length > 0 && <Choices choices={choices} choicesRef={choicesRef} />}
+          {choices && choices.length > 0 && <Choices choices={choices} choicesRef={choicesRef} />}
         </div>
       )}
     </div>
