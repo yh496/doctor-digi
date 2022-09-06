@@ -50,7 +50,7 @@ const Main = () => {
         setDepth(nextDepth);
       }
       if (video) {
-        onVideoChange(video);
+        onVideoChange(video, 0);
       }
       if (nextChoices) {
         setChoices(nextChoices);
@@ -63,7 +63,8 @@ const Main = () => {
     choicesElement = choicesRef.current;
   }, []);
 
-  const onVideoChange = (url) => {
+  const onVideoChange = (url, idle=0) => {
+    setVideoLoop(false)
     if (videoElement) {
       videoElement = videoRef.current;
       videoElement.style = "";
@@ -105,7 +106,6 @@ const Main = () => {
   }
 
   const onVideoEnd = () => {
-    console.log("VIDEO ENDED");
     startRecording();
     onVideoChange("/digi_videos/idle_v1.webm", true);
     setVideoLoop(true);
