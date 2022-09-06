@@ -87,7 +87,9 @@ const Main = () => {
           choicesElement.style.transitionDuration = idle ? "1s" : "1.5s";
         }
       }, 100);
-      AudioStreamer.stopRecording();
+      if (!idle) {
+        AudioStreamer.stopRecording();
+      }
       videoElement.play();
     }
   };
