@@ -63,6 +63,10 @@ const Main = () => {
     choicesElement = choicesRef.current;
   }, []);
 
+  useEffect(() => {
+    if (AudioStreamer.timeOut) setStartDigi(false);
+  }, [videoLoop]);
+
   const onVideoChange = (url, idle = 0) => {
     setVideoLoop(false);
     videoElement = videoRef.current;
