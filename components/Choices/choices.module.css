@@ -3,6 +3,8 @@
 .choiceContainer { 
     z-index: 20;
     position: absolute;
+    display: grid;
+    place-items:center;
     background-color: #ffffff8a;
     border-radius: 30px;
     padding: 10;
@@ -10,6 +12,5 @@
     font-size: 18px;
     right: 50px;
     width: 300px;
-    height:140px;
     top: 0px;
 }
