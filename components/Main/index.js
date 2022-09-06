@@ -15,7 +15,6 @@ const Main = () => {
   let videoElement = videoRef.current;
   let choicesElement = choicesRef.current;
 
-
   const [startDigi, setStartDigi] = useState(false);
 
   const [responseTrigger, setResponseTrigger] = useState(false);
@@ -24,10 +23,17 @@ const Main = () => {
   const [scenario, setScenario] = useState("start");
   const [depth, setDepth] = useState(0);
 
-  const [videoUrl, setVideoUrl] = useState("/digi_videos/starters/starter1.webm");
+  const [videoUrl, setVideoUrl] = useState(
+    "/digi_videos/starters/starter1.webm"
+  );
+  const [videoLoop, setVideoLoop] = useState(false);
 
   const [sttResponse, setSttResponse] = useState("");
-  const [choices, setChoices] = useState(["Schedule an Appointment", "Check Symptoms", "Drug Info"]);
+  const [choices, setChoices] = useState([
+    "Schedule an Appointment",
+    "Check Symptoms",
+    "Drug Info",
+  ]);
 
   useEffect(() => {
     if (sttResponse) {
@@ -58,26 +64,24 @@ const Main = () => {
   }, []);
 
   const onVideoChange = (url) => {
-
-    console.log("urllll", url)
     if (videoElement) {
       videoElement = videoRef.current;
       videoElement.style = "";
-      if (choices.length > 0) {
+      if (choices?.length > 0) {
         choicesElement.style = "";
         choicesElement.style.opacity = 0;
         choicesElement.style.transitionDuration = 0;
       }
       videoElement.style.opacity = 0;
       videoElement.style.transitionDuration = 0;
-      
+
       setVideoUrl(url);
       setTimeout(() => {
         videoElement.style.opacity = 1;
-        videoElement.style.transitionDuration = "1.5s";
-        if (choices.length > 0) {
+        videoElement.style.transitionDuration = idle ? "1s" : "1.5s";
+        if (choices?.length > 0) {
           choicesElement.style.opacity = 1;
-          choicesElement.style.transitionDuration = "1.5s";
+          choicesElement.style.transitionDuration = idle ? "1s" : "1.5s";
         }
       }, 100);
       AudioStreamer.stopRecording()
@@ -85,10 +89,10 @@ const Main = () => {
 
     }
   };
-  
+
   const recordingCallback = (sttResponse) => {
     setSttResponse(sttResponse);
-    setResponseTrigger(!responseTrigger)
+    setResponseTrigger(!responseTrigger);
   };
 
   function startRecording() {
@@ -101,7 +105,10 @@ const Main = () => {
   }
 
   const onVideoEnd = () => {
+    console.log("VIDEO ENDED");
     startRecording();
+    onVideoChange("/digi_videos/idle_v1.webm", true);
+    setVideoLoop(true);
   };
 
   return (
@@ -122,8 +129,11 @@ const Main = () => {
             src={videoUrl}
             autoPlay
             ref={videoRef}
+            loop={videoLoop}
           />
-          {choices && choices.length > 0 && <Choices choices={choices} choicesRef={choicesRef} />}
+          {choices && choices.length > 0 && (
+            <Choices choices={choices} choicesRef={choicesRef} />
+          )}
         </div>
       )}
     </div>
