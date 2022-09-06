@@ -13,12 +13,14 @@ import AudioStreamer from "../../lib/AudioHandler";
 
 const Main = () => {
   const [startDigi, setStartDigi] = useState(false);
-
   const [recording, setRecording] = useState(false);
-
 
   const [scenario, setScenario]= useState("start");
   const [depth, setDepth] = useState(0);
+  const videoRef = React.useRef();
+  const choicesRef = React.useRef();
+  let videoElement = videoRef.current;
+  let choicesElement = choicesRef.current;
   const [videoUrl, setVideoUrl] = useState(
     "/digi_videos/starters/starter1.webm"
   );
@@ -34,11 +36,9 @@ const Main = () => {
     
   },[sttResponse])
 
-  const videoRef = React.useRef();
-  let videoElement = videoRef.current;
-
   useEffect(() => {
     videoElement = videoRef.current;
+    choicesElement = choicesRef.current;
   });
 
   const onVideoChange = (url) => {
@@ -83,11 +83,12 @@ const Main = () => {
             autoPlay
             ref={videoRef}
           />
-          <Choices scenario={0} depth={0} />
+          <Choices scenario={0} depth={0} choicesRef={choicesRef} />
 
           <RecordAudio />
           <NextResponse
             videoRef={videoRef}
+            choicesRef={choicesRef}
             src={videoUrl}
             onVideoChange={onVideoChange}
           />

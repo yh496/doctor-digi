@@ -107,6 +107,6 @@ function processSpeechData (speechData) {
       }
   }
 
-  return 'default'
+  return "default"
 
 }
