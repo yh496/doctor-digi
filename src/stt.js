@@ -15,7 +15,7 @@ let options = {
   config: {
       encoding: 'LINEAR16',
       sampleRateHertz: 16000,
-      languageCode: 'ko',
+      languageCode: 'EN',
       profanityFilter: false,
       enableWordTimeOffsets: false,
       speechContexts: [speechContextsElement],
@@ -107,6 +107,6 @@ function processSpeechData (speechData) {
       }
   }
 
-  return 'fail'
+  return 'default'
 
 }
