@@ -100,11 +100,7 @@ const Main = () => {
 
     if (videoElement) {
       videoElement.style = "";
-      if (choices && choices.length > 0) {
-        choicesElement.style = "";
-        choicesElement.style.opacity = 0;
-        choicesElement.style.transitionDuration = 0;
-      }
+
       videoElement.style.opacity = 0;
       videoElement.style.transitionDuration = 0;
 
@@ -112,10 +108,6 @@ const Main = () => {
       setTimeout(() => {
         videoElement.style.opacity = 1;
         videoElement.style.transitionDuration = idle ? "1s" : "1.5s";
-        if (choices && choices.length > 0) {
-          choicesElement.style.opacity = 1;
-          choicesElement.style.transitionDuration = idle ? "1s" : "1.5s";
-        }
       }, 100);
 
       videoElement.play();
@@ -187,33 +179,31 @@ const Main = () => {
               <div className={Styles.sidePanel}>
                 <div className={Styles.imgContainer}>ang</div>
                 <div className={Styles.chatInterface}>
-                  {choices && choices.length > 0 && (
-                    <Choices
-                      chatState={chatState}
-                      setChatState={setChatState}
-                      choices={choices}
-                      digiSpeech={digiSpeech}
-                      choicesRef={choicesRef}
-                      setSttResponse={setSttResponse}
-                      responseTrigger={responseTrigger}
-                      setResponseTrigger={setResponseTrigger}
-                    />
-                  )}
+                  <Choices
+                    chatState={chatState}
+                    setChatState={setChatState}
+                    choices={choices}
+                    digiSpeech={digiSpeech}
+                    choicesRef={choicesRef}
+                    setSttResponse={setSttResponse}
+                    responseTrigger={responseTrigger}
+                    setResponseTrigger={setResponseTrigger}
+                  />
                 </div>
               </div>
             </div>
-            <div className={Styles.lower}>
-              <div className={Styles.recordInterface}>
-                <AiTwotoneAudio
-                  style={{
-                    color: recording ? "red" : "black",
-                    height: "30px",
-                    width: "30px",
-                  }}
-                />
-              </div>
-              <div className={Styles.helpText}>{helpText}</div>
+          </div>
+          <div className={Styles.lower}>
+            <div className={Styles.recordInterface}>
+              <AiTwotoneAudio
+                style={{
+                  color: recording ? "red" : "black",
+                  height: "30px",
+                  width: "30px",
+                }}
+              />
             </div>
+            <div className={Styles.helpText}>{helpText}</div>
           </div>
         </>
       )}

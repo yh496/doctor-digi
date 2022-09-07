@@ -45,13 +45,13 @@ const Choices = (props) => {
                 src="./digi_face.png"
               />
               <div className={Styles.digiSpeechContainer}>
-                <p key={idx} style={{ textAlign: "left" }}>
+                <p key={idx} style={{ textAlign: "left", marginBottom: 0 }}>
                   {dialogue.aiText}
                 </p>
               </div>
             </div>
             <div className={Styles.choiceContainer}>
-              {dialogue.choices.map((choice, idx) => (
+              {dialogue?.choices?.map((choice, idx) => (
                 <button
                   className={Styles.choiceButton}
                   key={idx}
@@ -77,7 +77,9 @@ const Choices = (props) => {
             <div>
               {dialogue.userText && (
                 <div className={Styles.userFaceContainer}>
-                  <p className={Styles.textContainer}>{dialogue.userText}</p>
+                  <div className={Styles.userTextContainer}>
+                    <p className={Styles.textContainer}>{dialogue.userText}</p>
+                  </div>
                   <img
                     className={Styles.userImage}
                     width={60}
