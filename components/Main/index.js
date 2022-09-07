@@ -18,6 +18,7 @@ const Main = () => {
   const [startDigi, setStartDigi] = useState(false);
 
   const [responseTrigger, setResponseTrigger] = useState(false);
+  const [isScenarioEnd, setIsScenarioEnd] = useState(false)
   const [recording, setRecording] = useState(false);
 
   const [scenario, setScenario] = useState("start");
@@ -37,7 +38,7 @@ const Main = () => {
 
   useEffect(() => {
     if (sttResponse) {
-      const { nextScenario, nextDepth, video, nextChoices } = getNextResponse({
+      const { nextScenario, nextDepth, video, nextChoices, isEnd } = getNextResponse({
         scenario,
         depth,
         response: sttResponse,
@@ -55,6 +56,7 @@ const Main = () => {
       if (nextChoices) {
         setChoices(nextChoices);
       }
+      setIsScenarioEnd(isEnd)
     }
   }, [responseTrigger]);
 
@@ -64,7 +66,7 @@ const Main = () => {
   }, []);
 
   const onVideoChange = (url, idle = 0) => {
-    setVideoLoop(false);
+    setVideoLoop(idle);
     videoElement = videoRef.current;
     choicesElement = choicesRef.current;
 
@@ -108,10 +110,27 @@ const Main = () => {
     });
   }
 
-  const onVideoEnd = () => {
+  const startFromBeginning = () => {
+    onVideoChange("/digi_videos/starters/starter1.webm");
+    setChoices([
+      "Schedule an Appointment",
+      "Check Symptoms",
+      "Drug Info",
+    ]);
+    setDepth(0);
+    setScenario("start")      
     startRecording();
-    onVideoChange("/digi_videos/idle_v1.webm", true);
-    setVideoLoop(true);
+
+  }
+
+  const onVideoEnd = () => {
+    if (isScenarioEnd) {
+      startFromBeginning();
+    } else {
+      startRecording();
+      onVideoChange("/digi_videos/idle_v1.webm", true);
+    }
+   
   };
 
   return (
@@ -126,8 +145,8 @@ const Main = () => {
         <div className={Styles.digiContainer}>
           <video
             className={Styles.video}
-            width="960px"
-            height="540px"
+            width="1239px"
+            height="700px"
             onEnded={onVideoEnd}
             src={videoUrl}
             autoPlay
