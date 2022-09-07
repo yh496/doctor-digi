@@ -38,6 +38,7 @@ function startStreamRecognition (client) {
       })
       .on('data', (data) => {
         console.log(data.results[0].alternatives[0].transcript)
+        client.emit('userText', data.results[0].alternatives[0].transcript)
         let detected = findKeyword(data.results[0].alternatives[0].transcript)
         console.log('detecetd', detected)
           if (detected.found) {
