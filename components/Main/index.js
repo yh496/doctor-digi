@@ -72,16 +72,6 @@ const Main = () => {
     choicesElement = choicesRef.current;
   }, []);
 
-  // useEffect(() => {
-  //   if (AudioStreamer.timeOut) {
-  //     setStartDigi(false);
-  //     setVideoUrl("/digi_videos/starters/starter1.webm");
-  //     setScenario("start");
-  //     setDepth(0);
-  //     setChoices(["Schedule an Appointment", "Check Symptoms", "Drug Info"]);
-  //   }
-  // }, [videoLoop]);
-
   const onVideoChange = (url, idle = 0) => {
       setVideoLoop(idle);
       setIsAISpeaking(true)
@@ -118,7 +108,6 @@ const Main = () => {
     setSttResponse(sttResponse);
     setResponseTrigger(!responseTrigger);
     setRecording(false);
-
   };
 
   const onTranscription = (text) => {
@@ -135,11 +124,6 @@ const Main = () => {
   }
 
   const startFromBeginning = () => {
-    setChoices([
-      "Schedule an Appointment",
-      "Check Symptoms",
-      "Drug Info",
-    ]);
     setDepth(0);
     setScenario("reset")  
     setSttResponse("default")
@@ -183,7 +167,6 @@ const Main = () => {
             </div> 
             <div className={Styles.sidePanel}> 
               <div className={Styles.imgContainer}> 
-                ang 
               </div> 
               <div className={Styles.chatInterface}> 
                 {choices && choices.length > 0 && (
