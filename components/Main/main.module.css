@@ -4,7 +4,8 @@
   justify-content: flex-end;
   height: 100vh;
   width: 100vw;
-  background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url("/main_bg.jpeg") no-repeat;
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    url("/main_bg.jpeg") no-repeat;
   background-size: 100% 100%;
   align-items: center;
 }
@@ -18,29 +19,31 @@
 }
 
 .digiContainer {
-    position: relative;
-    height: 100%;
+  position: relative;
+  height: 100%;
+  z-index: 1;
 }
 
 .video {
-    position: absolute;
-    left: -80px; 
-    bottom: 0px;
+  position: absolute;
+  left: -80px;
+  bottom: 0px;
 }
 
 .sidePanel {
-    display: grid; 
-    grid-template-rows: 1fr 1fr;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  z-index: 100;
 }
 
-.imgContainer { 
-    display: grid; 
-    place-items: center;
+.imgContainer {
+  display: grid;
+  place-items: center;
 }
 
-.chatInterface { 
-    display: grid; 
-    place-items: center;
+.chatInterface {
+  display: grid;
+  place-items: center;
 }
 
 /* .doctorContainer { 
