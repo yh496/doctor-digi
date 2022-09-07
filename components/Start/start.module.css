@@ -27,7 +27,11 @@
     border-radius: 10px;
 }
 .info {
+    margin-top: 10px;
+    display: grid;
+    place-items: center;
     text-align: center; 
     color: grey;
     line-height: 26px;
 }
+

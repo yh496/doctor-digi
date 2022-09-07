@@ -9,6 +9,9 @@ import { getNextResponse } from "../../lib/ResponseGenerator";
 
 import AudioStreamer from "../../lib/AudioHandler";
 
+import {AiTwotoneAudio} from "react-icons/ai";
+import { ConsoleSqlOutlined } from "@ant-design/icons";
+
 const Main = () => {
   const videoRef = useRef();
   const choicesRef = useRef();
@@ -21,8 +24,12 @@ const Main = () => {
   const [isScenarioEnd, setIsScenarioEnd] = useState(false)
   const [recording, setRecording] = useState(false);
 
+  const [isAISpeaking, setIsAISpeaking] = useState(true);
+
   const [scenario, setScenario] = useState("start");
   const [depth, setDepth] = useState(0);
+
+  const [helpText, setHelpText] =useState("")
 
   const [videoUrl, setVideoUrl] = useState(
     "/digi_videos/starters/starter1.webm"
@@ -76,64 +83,72 @@ const Main = () => {
   // }, [videoLoop]);
 
   const onVideoChange = (url, idle = 0) => {
-    setVideoLoop(idle);
-    videoElement = videoRef.current;
-    choicesElement = choicesRef.current;
-
-    if (videoElement) {
-      videoElement.style = "";
-      if (choices?.length > 0) {
-        choicesElement.style = "";
-        choicesElement.style.opacity = 0;
-        choicesElement.style.transitionDuration = 0;
-      }
-      videoElement.style.opacity = 0;
-      videoElement.style.transitionDuration = 0;
-
-      setVideoUrl(url);
-      setTimeout(() => {
-        videoElement.style.opacity = 1;
-        videoElement.style.transitionDuration = idle ? "1s" : "1.5s";
-        if (choices?.length > 0) {
-          choicesElement.style.opacity = 1;
-          choicesElement.style.transitionDuration = idle ? "1s" : "1.5s";
+      setVideoLoop(idle);
+      setIsAISpeaking(true)
+      videoElement = videoRef.current;
+      choicesElement = choicesRef.current;
+      
+      if (videoElement) {
+        videoElement.style = "";
+        if (choices && choices.length > 0) {
+          choicesElement.style = "";
+          choicesElement.style.opacity = 0;
+          choicesElement.style.transitionDuration = 0;
         }
-      }, 100);
-      if (!idle) {
-        AudioStreamer.stopRecording();
+        videoElement.style.opacity = 0;
+        videoElement.style.transitionDuration = 0;
+  
+        setVideoUrl(url);
+        setTimeout(() => {
+          videoElement.style.opacity = 1;
+          videoElement.style.transitionDuration = idle ? "1s" : "1.5s";
+          if (choices && choices.length > 0) {
+            choicesElement.style.opacity = 1;
+            choicesElement.style.transitionDuration = idle ? "1s" : "1.5s";
+          }
+        }, 100);
+        
+  
+        videoElement.play();
       }
-      videoElement.play();
-    }
+
   };
 
   const recordingCallback = (sttResponse) => {
     setSttResponse(sttResponse);
     setResponseTrigger(!responseTrigger);
+    setRecording(false);
+
   };
+
+  const onTranscription = (text) => {
+    setHelpText(text);
+  }
 
   function startRecording() {
     console.log("audio start recording...", scenario);
     setRecording(true);
-    AudioStreamer.initRecording(recordingCallback, (error) => {
+    setHelpText("Speak to Dr. Digi ...")
+    AudioStreamer.initRecording(recordingCallback, onTranscription, (error) => {
       console.error("Error when recording", error);
-      setRecording(false);
     });
   }
 
   const startFromBeginning = () => {
-    onVideoChange("/digi_videos/starters/starter1.webm");
     setChoices([
       "Schedule an Appointment",
       "Check Symptoms",
       "Drug Info",
     ]);
     setDepth(0);
-    setScenario("start")      
-    startRecording();
-
+    setScenario("reset")  
+    setSttResponse("default")
+    setResponseTrigger(!responseTrigger)
   }
 
+
   const onVideoEnd = () => {
+    setIsAISpeaking(false)
     if (isScenarioEnd) {
       startFromBeginning();
     } else {
@@ -152,29 +167,43 @@ const Main = () => {
           }}
         />
       ) : (
-        <div className={Styles.contentContainer}>
-          <div className={Styles.digiContainer}> 
-            <video
-              className={Styles.video}
-              height="700px"
-              onEnded={onVideoEnd}
-              src={videoUrl}
-              autoPlay
-              ref={videoRef}
-              loop={videoLoop}
-            />
-          </div> 
-          <div className={Styles.sidePanel}> 
-            <div className={Styles.imgContainer}> 
-              ang 
+        <>
+        <div className={Styles.upper}>
+          <div className={Styles.contentContainer }> 
+            <div className={Styles.digiContainer}> 
+              <video
+                className={Styles.video}
+                height="700px"
+                onEnded={onVideoEnd}
+                src={videoUrl}
+                autoPlay
+                ref={videoRef}
+                loop={videoLoop}
+              />
             </div> 
-            <div className={Styles.chatInterface}> 
-              {choices && choices.length > 0 && (
-                <Choices choices={choices} choicesRef={choicesRef} />
-              )}
+            <div className={Styles.sidePanel}> 
+              <div className={Styles.imgContainer}> 
+                ang 
+              </div> 
+              <div className={Styles.chatInterface}> 
+                {choices && choices.length > 0 && (
+                  <Choices choices={choices} choicesRef={choicesRef} />
+                )}
+              </div> 
             </div> 
-          </div> 
+          </div>
+         
         </div>
+        <div className={Styles.lower}>
+            <div className={Styles.recordInterface}>
+              <AiTwotoneAudio style={{color: recording ? "red" : "black", height: "30px", width: "30px"}}/>
+            </div>
+            <div className={Styles.helpText}>
+              {helpText}
+            </div>
+         </div>
+         
+       </>
       )}
     </div>
   );
