@@ -65,6 +65,16 @@ const Main = () => {
     choicesElement = choicesRef.current;
   }, []);
 
+  useEffect(() => {
+    if (AudioStreamer.timeOut) {
+      setStartDigi(false);
+      setVideoUrl("/digi_videos/starters/starter1.webm");
+      setScenario("start");
+      setDepth(0);
+      setChoices(["Schedule an Appointment", "Check Symptoms", "Drug Info"]);
+    }
+  }, [videoLoop]);
+
   const onVideoChange = (url, idle = 0) => {
     setVideoLoop(idle);
     videoElement = videoRef.current;
