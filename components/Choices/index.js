@@ -1,8 +1,12 @@
 import Styles from "./choices.module.css";
 import React, { useState, useEffect, useRef } from "react";
 
+import AudioStreamer from "../../lib/AudioHandler";
+
 const Choices = (props) => {
   const {
+    setHelpText,
+    setRecording, 
     choices,
     chatState,
     setChatState,
@@ -68,6 +72,9 @@ const Choices = (props) => {
                       sttResponse;
                     setChatState(copyChatState);
                     setResponseTrigger(!responseTrigger);
+                    setRecording(false)
+                    AudioStreamer.stopRecording();
+                    setHelpText(sttResponse)
                   }}
                 >
                   {choice}
