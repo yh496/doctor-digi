@@ -65,15 +65,15 @@ const Main = () => {
     choicesElement = choicesRef.current;
   }, []);
 
-  useEffect(() => {
-    if (AudioStreamer.timeOut) {
-      setStartDigi(false);
-      setVideoUrl("/digi_videos/starters/starter1.webm");
-      setScenario("start");
-      setDepth(0);
-      setChoices(["Schedule an Appointment", "Check Symptoms", "Drug Info"]);
-    }
-  }, [videoLoop]);
+  // useEffect(() => {
+  //   if (AudioStreamer.timeOut) {
+  //     setStartDigi(false);
+  //     setVideoUrl("/digi_videos/starters/starter1.webm");
+  //     setScenario("start");
+  //     setDepth(0);
+  //     setChoices(["Schedule an Appointment", "Check Symptoms", "Drug Info"]);
+  //   }
+  // }, [videoLoop]);
 
   const onVideoChange = (url, idle = 0) => {
     setVideoLoop(idle);
@@ -152,20 +152,28 @@ const Main = () => {
           }}
         />
       ) : (
-        <div className={Styles.digiContainer}>
-          <video
-            className={Styles.video}
-            width="1239px"
-            height="700px"
-            onEnded={onVideoEnd}
-            src={videoUrl}
-            autoPlay
-            ref={videoRef}
-            loop={videoLoop}
-          />
-          {choices && choices.length > 0 && (
-            <Choices choices={choices} choicesRef={choicesRef} />
-          )}
+        <div className={Styles.contentContainer}>
+          <div className={Styles.digiContainer}> 
+            <video
+              className={Styles.video}
+              height="700px"
+              onEnded={onVideoEnd}
+              src={videoUrl}
+              autoPlay
+              ref={videoRef}
+              loop={videoLoop}
+            />
+          </div> 
+          <div className={Styles.sidePanel}> 
+            <div className={Styles.imgContainer}> 
+              ang 
+            </div> 
+            <div className={Styles.chatInterface}> 
+              {choices && choices.length > 0 && (
+                <Choices choices={choices} choicesRef={choicesRef} />
+              )}
+            </div> 
+          </div> 
         </div>
       )}
     </div>

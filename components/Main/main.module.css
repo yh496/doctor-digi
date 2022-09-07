@@ -9,8 +9,38 @@
   align-items: center;
 }
 
-.digiContainer {
+.contentContainer {
   position: relative;
+  display: grid;
+  height: 100%;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+}
+
+.digiContainer {
+    position: relative;
+    height: 100%;
+}
+
+.video {
+    position: absolute;
+    left: -80px; 
+    bottom: 0px;
+}
+
+.sidePanel {
+    display: grid; 
+    grid-template-rows: 1fr 1fr;
+}
+
+.imgContainer { 
+    display: grid; 
+    place-items: center;
+}
+
+.chatInterface { 
+    display: grid; 
+    place-items: center;
 }
 
 /* .doctorContainer { 
