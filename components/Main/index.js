@@ -95,6 +95,23 @@ const Main = () => {
     choicesElement = choicesRef.current;
   }, []);
 
+  useEffect(() => {
+    if (AudioStreamer.timeOut) {
+      setStartDigi(false);
+      setVideoUrl("/digi_videos/starters/starter1.webm");
+      setScenario("start");
+      setDepth(0);
+      setChoices(["Schedule an Appointment", "Check Symptoms", "Drug Info"]);
+      setChatState([
+        {
+          aiText: "Hello! What can I help you with today?",
+          choices: ["Schedule an Appointment", "Check Symptoms", "Drug Info"],
+          userText: "",
+        },
+      ]);
+    }
+  }, [videoLoop]);
+
   const onVideoChange = (url, idle = 0) => {
     setVideoLoop(idle);
     setIsAISpeaking(true);

@@ -113,11 +113,12 @@ const speechToEventMap = {
               ))}
             </div>
             <div>
-              {dialogue.userText && dialogue.userText != "start" && (
+              {dialogue.userText && dialogue.userText != "default" && (
                 <div className={Styles.userFaceContainer}>
                   <div className={Styles.userTextContainer}>
                     <p className={Styles.textContainer}>
                       {dialogue?.choices?.find((choice) => {
+                        console.log(dialogue.userText, "USER TEXT");
                         return choice.toLowerCase().includes(dialogue.userText)
                           ? choice
                           : "";

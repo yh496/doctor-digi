@@ -61,6 +61,8 @@
   border-radius: 15px;
   justify-self: end;
   background-attachment: fixed;
+  margin-right: 12px;
+  margin-left: 12px;
 }
 
 .userFaceContainer {
