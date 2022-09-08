@@ -2,6 +2,7 @@ import Styles from "./choices.module.css";
 import React, { useState, useEffect, useRef } from "react";
 
 import AudioStreamer from "../../lib/AudioHandler";
+import { AiTwotoneAudio } from "react-icons/ai";
 
 const Choices = (props) => {
   const {
@@ -15,6 +16,8 @@ const Choices = (props) => {
     setSttResponse,
     responseTrigger,
     setResponseTrigger,
+    recording, 
+    helpText,
     ...rest
   } = props;
 
@@ -29,6 +32,8 @@ const speechToEventMap = {
     "yes": "yes",
     "no": "no",
     "primary": "primary",
+    "primary care physician": "primary",
+
     "physician": "physician", 
     "dentist": "dentist",
     "dermatologist": "dermatologist",
@@ -68,6 +73,8 @@ const speechToEventMap = {
 
     "advil": "advil",
     "allegra": "allegra",
+
+    "skin cut": "skinCut"
     
 } 
 
@@ -88,12 +95,11 @@ const speechToEventMap = {
         {chatState.map((dialogue, idx) => (
           <>
             <div className={Styles.digiContainer}>
+              <div className={Styles.digiImageContainer}> 
               <img
-                className={Styles.digiImage}
-                width={60}
-                height={60}
                 src="./digi_face.png"
               />
+              </div>
               <div className={Styles.digiSpeechContainer}>
                 <p key={idx} style={{ textAlign: "left", marginBottom: 0 }}>
                   {dialogue.aiText}
@@ -162,7 +168,20 @@ const speechToEventMap = {
           }}
         ></div>
       </div>
+      <div className={Styles.lower}>
+            <div className={Styles.recordInterface}>
+              <AiTwotoneAudio
+                style={{
+                  color: recording ? "red" : "black",
+                  height: "30px",
+                  width: "30px",
+                }}
+              />
+            </div>
+            <div className={Styles.helpText}>{helpText}</div>
+       </div>
     </div>
+    
   );
 };
 

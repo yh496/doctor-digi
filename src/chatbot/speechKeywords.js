@@ -4,7 +4,7 @@ const speechToEventMap = {
     "yes": "yes",
     "no": "no",
     "primary": "primary",
-    "physician": "physician", 
+    "physician": "primary", 
     "dentist": "dentist",
     "dermatologist": "dermatologist",
     "psychiatrist": "psychiatrist", 
@@ -38,7 +38,9 @@ const speechToEventMap = {
     "interactions":"interaction",
     "interaction": "interaction",
 
+    "Advil": "advil",
     "advil": "advil",
+    "Allegra": "allegra",
     "allegra": "allegra",
     
     

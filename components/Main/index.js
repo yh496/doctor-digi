@@ -9,9 +9,6 @@ import { getNextResponse } from "../../lib/ResponseGenerator";
 
 import AudioStreamer from "../../lib/AudioHandler";
 
-import { AiTwotoneAudio } from "react-icons/ai";
-
-import { ConsoleSqlOutlined } from "@ant-design/icons";
 
 const Main = () => {
   const videoRef = useRef();
@@ -213,22 +210,12 @@ const Main = () => {
                     setSttResponse={setSttResponse}
                     responseTrigger={responseTrigger}
                     setResponseTrigger={setResponseTrigger}
+                    recording={recording}
+                    helpText={helpText}
                   />
                 </div>
               </div>
             </div>
-          </div>
-          <div className={Styles.lower}>
-            <div className={Styles.recordInterface}>
-              <AiTwotoneAudio
-                style={{
-                  color: recording ? "red" : "black",
-                  height: "30px",
-                  width: "30px",
-                }}
-              />
-            </div>
-            <div className={Styles.helpText}>{helpText}</div>
           </div>
         </>
       )}

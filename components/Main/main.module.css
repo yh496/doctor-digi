@@ -15,7 +15,7 @@
   flex-direction: column;
   justify-content: flex-start;
   width: 100%;
-  height: 93vh;
+  height: 100vh;
 }
 
 .contentContainer {
@@ -53,29 +53,7 @@
   place-items: center;
 }
 
-.lower {
-  height: 7vh;
-  width: 100%;
-  display: flex;
-  border-top-left-radius: 30px;
-  border-top-right-radius: 30px;
-  background-color: #edeff2;
-  z-index: 200;
-  display: flex;
-  flex-direction: column;
-}
 
-.recordInterface {
-  display: grid;
-  place-items: center;
-  height: 60%;
-}
-
-.helpText {
-  text-align: center;
-  font-size: 18px;
-  font-weight: 600;
-}
 /* .doctorContainer { 
     display: flex;
     flex-direction: row; 
