@@ -25,6 +25,22 @@ const speechToEventMap = {
     "cut": "skinCut",
     "ankle": "swollenAnkle",
     "swollen": "swollenAnkle",
+
+    "drug": "drugInfo",
+    "info": "drugInfo",
+
+    "dose": "dosage",
+    "usage": "dosage",
+    "dosage": "dosage",
+    "daily": "dosage",
+
+    "general": "generalInfo",
+    "interactions":"interaction",
+    "interaction": "interaction",
+
+    "advil": "advil",
+    "allegra": "allegra",
+    
     
 } 
 

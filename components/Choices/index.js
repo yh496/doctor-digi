@@ -50,7 +50,24 @@ const speechToEventMap = {
     "cut": "skinCut",
     "ankle": "swollenAnkle",
     "swollen": "swollenAnkle",
-    "swollen ankle": "swollenAnkle"
+    "swollen ankle": "swollenAnkle",
+    "drug": "drugInfo",
+    "info": "drugInfo",
+
+
+    "dose": "dosage",
+    "usage": "dosage",
+    "dosage": "dosage",
+    "daily": "dosage",
+    "daily dose limit": "dosage",
+
+    "general": "generalInfo",
+    "general information": "generalInfo",
+    "interactions":"interaction",
+    "interaction": "interaction",
+
+    "advil": "advil",
+    "allegra": "allegra",
     
 } 
 
@@ -90,22 +107,23 @@ const speechToEventMap = {
                   key={idx}
                   onClick={() => {
                     let sttResponse;
+                    let userText;
                     Object.keys(speechToEventMap).forEach((element) => {
                       console.log('elementtt', element,choice.toLowerCase() )
                       if (element === choice.toLowerCase()) {
                         sttResponse = speechToEventMap[element];
+                        userText = element;
                       }
                     });
-                    console.log('sttResponseee', sttResponse)
                     setSttResponse(sttResponse);
                     let copyChatState = chatState;
                     copyChatState[copyChatState.length - 1].userText =
-                      sttResponse;
+                      userText;
                     setChatState(copyChatState);
                     setResponseTrigger(!responseTrigger);
                     setRecording(false);
                     AudioStreamer.stopRecording();
-                    setHelpText(sttResponse);
+                    setHelpText(userText);
                   }}
                 >
                   {choice}

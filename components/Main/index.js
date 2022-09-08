@@ -148,7 +148,6 @@ const Main = () => {
   };
 
   const onDigit = (event) => {
-    console.log('digitEventttt', event)
     setDigitEvent(event)
   }
 
