@@ -18,17 +18,42 @@ const Choices = (props) => {
     ...rest
   } = props;
 
-  const speechToEventMap = [
-    "appointment",
-    "yes",
-    "no",
-    "primary",
-    "physician",
-    "dentist",
-    "dermatologist",
-    "psychiatrist",
-    "phsyiatrist",
-  ];
+
+
+
+const speechToEventMap = {
+    "schedule an appointment": "appointment",
+    "appointment": "appointment",
+    "check symptoms": "symptom",
+    "drug info": "drugInfo",
+    "yes": "yes",
+    "no": "no",
+    "primary": "primary",
+    "physician": "physician", 
+    "dentist": "dentist",
+    "dermatologist": "dermatologist",
+    "psychiatrist": "psychiatrist", 
+    "phsyiatrist": "phsyiatrist",
+
+    "check": "symptom",
+    "text": "symptom",
+    "symptoms": "symptom",
+    "symptom": "symptom",
+
+    "fever": "fever",
+    "weather": "fever",
+    "uber": "fever",
+    "gilbert":"fever",
+    "Gilbert":"fever",
+
+    "skin": "skinCut",
+    "cut": "skinCut",
+    "ankle": "swollenAnkle",
+    "swollen": "swollenAnkle",
+    "swollen ankle": "swollenAnkle"
+    
+} 
+
 
   let messagesEnd = undefined;
 
@@ -64,11 +89,14 @@ const Choices = (props) => {
                   className={Styles.choiceButton}
                   key={idx}
                   onClick={() => {
-                    let sttResponse = speechToEventMap.find((element) => {
-                      if (choice.toLowerCase().includes(element)) {
-                        return element;
+                    let sttResponse;
+                    Object.keys(speechToEventMap).forEach((element) => {
+                      console.log('elementtt', element,choice.toLowerCase() )
+                      if (element === choice.toLowerCase()) {
+                        sttResponse = speechToEventMap[element];
                       }
                     });
+                    console.log('sttResponseee', sttResponse)
                     setSttResponse(sttResponse);
                     let copyChatState = chatState;
                     copyChatState[copyChatState.length - 1].userText =

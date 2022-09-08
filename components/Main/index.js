@@ -10,6 +10,7 @@ import { getNextResponse } from "../../lib/ResponseGenerator";
 import AudioStreamer from "../../lib/AudioHandler";
 
 import { AiTwotoneAudio } from "react-icons/ai";
+
 import { ConsoleSqlOutlined } from "@ant-design/icons";
 
 const Main = () => {
@@ -28,6 +29,8 @@ const Main = () => {
 
   const [scenario, setScenario] = useState("start");
   const [depth, setDepth] = useState(0);
+
+  const [digitEvent, setDigitEvent] = useState("")
 
   const [helpText, setHelpText] = useState("");
 
@@ -61,6 +64,7 @@ const Main = () => {
           scenario,
           depth,
           response: sttResponse,
+          digitEvent
         });
 
       if (nextScenario) {
@@ -126,11 +130,16 @@ const Main = () => {
     setHelpText(text);
   };
 
+  const onDigit = (event) => {
+    console.log('digitEventttt', event)
+    setDigitEvent(event)
+  }
+
   function startRecording() {
     console.log("audio start recording...", scenario);
     setRecording(true);
     setHelpText("Speak to Dr. Digi ...");
-    AudioStreamer.initRecording(recordingCallback, onTranscription, (error) => {
+    AudioStreamer.initRecording(recordingCallback, onTranscription, onDigit, (error) => {
       console.error("Error when recording", error);
     });
   }

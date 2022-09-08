@@ -8,7 +8,24 @@ const speechToEventMap = {
     "dentist": "dentist",
     "dermatologist": "dermatologist",
     "psychiatrist": "psychiatrist", 
-    "phsyiatrist": "phsyiatrist"
+    "phsyiatrist": "phsyiatrist",
+
+    "check": "symptom",
+    "text": "symptom",
+    "symptoms": "symptom",
+    "symptom": "symptom",
+
+    "fever": "fever",
+    "weather": "fever",
+    "uber": "fever",
+    "gilbert":"fever",
+    "Gilbert":"fever",
+
+    "skin": "skinCut",
+    "cut": "skinCut",
+    "ankle": "swollenAnkle",
+    "swollen": "swollenAnkle",
+    
 } 
 
 module.exports = speechToEventMap

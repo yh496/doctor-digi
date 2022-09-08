@@ -40,6 +40,13 @@ function startStreamRecognition (client) {
         console.log(data.results[0].alternatives[0].transcript)
         client.emit('userText', data.results[0].alternatives[0].transcript)
         let detected = findKeyword(data.results[0].alternatives[0].transcript)
+        let digitEvent = digitRecognition(data.results[0].alternatives[0].transcript)
+        console.log('diggittttt evenety', digitEvent)
+        if (digitEvent) {
+
+          client.emit("digit", digitEvent)
+
+        }
         console.log('detecetd', detected)
           if (detected.found) {
               const response  = detected.eventName
@@ -78,6 +85,33 @@ module.exports = {
   startStreamRecognition, stopStreamRecognition, receiveAudioData
 }
 
+
+function digitRecognition(speech) {
+  let digit = parseFloat(speech.match(/[\d\.]+/));
+  console.log('digit1', digit)
+
+  if (digit === 1|| digit === 2 || digit === 3) {
+    return "low"
+  }
+
+  if (digit === 4|| digit === 5 || digit === 6) {
+    return "mid"
+  }
+
+  if (digit === 7|| digit === 8 || digit === 9) {
+    return "high"
+  }
+  if (digit < 98.9) { 
+    return "normal"
+  }
+  if (digit >= 98.9) { 
+    return "high"
+  }
+
+  return null
+
+}
+
 function findKeyword (speech) {
   const keywords = speechToEventMap
   let found = false
@@ -92,6 +126,7 @@ function findKeyword (speech) {
         return {found,eventName}
       }
   }
+
 
   return {found,eventName}
 }
