@@ -85,30 +85,26 @@ const Choices = (props) => {
               ))}
             </div>
             <div>
-              {dialogue.userText &&
-                dialogue.userText != "start" &&
-                dialogue.userText != "default" && (
-                  <div className={Styles.userFaceContainer}>
-                    <div className={Styles.userTextContainer}>
-                      <p className={Styles.textContainer}>
-                        {dialogue?.choices?.find((choice) => {
-                          console.log(dialogue.userText, "USER TEXT");
-                          return choice
-                            .toLowerCase()
-                            .includes(dialogue.userText)
-                            ? choice
-                            : "";
-                        })}
-                      </p>
-                    </div>
-                    <img
-                      className={Styles.userImage}
-                      width={60}
-                      height={60}
-                      src="./user_face.png"
-                    />
+              {dialogue.userText && dialogue.userText != "default" && (
+                <div className={Styles.userFaceContainer}>
+                  <div className={Styles.userTextContainer}>
+                    <p className={Styles.textContainer}>
+                      {dialogue?.choices?.find((choice) => {
+                        console.log(dialogue.userText, "USER TEXT");
+                        return choice.toLowerCase().includes(dialogue.userText)
+                          ? choice
+                          : "";
+                      })}
+                    </p>
                   </div>
-                )}
+                  <img
+                    className={Styles.userImage}
+                    width={60}
+                    height={60}
+                    src="./user_face.png"
+                  />
+                </div>
+              )}
             </div>
           </>
         ))}
