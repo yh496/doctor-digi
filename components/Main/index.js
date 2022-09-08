@@ -180,6 +180,8 @@ const Main = () => {
                 <div className={Styles.imgContainer}>ang</div>
                 <div className={Styles.chatInterface}>
                   <Choices
+                    setHelpText={setHelpText}
+                    setRecording={setRecording}
                     chatState={chatState}
                     setChatState={setChatState}
                     choices={choices}
