@@ -20,8 +20,9 @@
 }
 
 .choiceContainer {
+  display: flex;
   padding: 10px;
-  justify-content: flex;
+  flex-wrap: wrap;
 }
 
 .choiceButton {
@@ -29,6 +30,9 @@
   margin: 5px;
   border-radius: 10px;
   text-align: center;
+  background-color: #1e90ff9e;
+  color: white;
+  border-color: white;
 }
 
 .digiSpeechContainer {

@@ -14,10 +14,6 @@ const Choices = (props) => {
     ...rest
   } = props;
 
-  const dialogue = {
-    digi: digiSpeech,
-  };
-
   const speechToEventMap = [
     "appointment",
     "yes",
@@ -56,6 +52,7 @@ const Choices = (props) => {
                   className={Styles.choiceButton}
                   key={idx}
                   onClick={() => {
+                    console.log(choice);
                     setSelectedChoice(choice);
                     let sttResponse = speechToEventMap.find((element) => {
                       if (choice.toLowerCase().includes(element)) {
@@ -78,7 +75,13 @@ const Choices = (props) => {
               {dialogue.userText && (
                 <div className={Styles.userFaceContainer}>
                   <div className={Styles.userTextContainer}>
-                    <p className={Styles.textContainer}>{dialogue.userText}</p>
+                    <p className={Styles.textContainer}>
+                      {dialogue?.choices?.find((choice) => {
+                        return choice.toLowerCase().includes(dialogue.userText)
+                          ? choice
+                          : "";
+                      })}
+                    </p>
                   </div>
                   <img
                     className={Styles.userImage}
