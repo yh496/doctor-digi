@@ -64,6 +64,7 @@ const Choices = (props) => {
 
     general: "generalInfo",
     "general information": "generalInfo",
+    "drug info": "drugInfo",
     interactions: "interaction",
     interaction: "interaction",
 

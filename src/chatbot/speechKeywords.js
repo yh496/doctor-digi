@@ -22,7 +22,6 @@ const speechToEventMap = {
     "Gilbert":"fever",
 
     "skin": "skinCut",
-    "cut": "skinCut",
     "ankle": "swollenAnkle",
     "swollen": "swollenAnkle",
 

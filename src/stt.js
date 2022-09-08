@@ -7,7 +7,7 @@ let speechClient = new speech.SpeechClient({
 
 console.log(Object.keys(speechToEventMap))
 const speechContextsElement = {
-  phrases: Object.entries(speechToEventMap),
+  phrases: Object.keys(speechToEventMap),
   boost: 20.0,
 };
 
@@ -41,13 +41,9 @@ function startStreamRecognition (client) {
         client.emit('userText', data.results[0].alternatives[0].transcript)
         let detected = findKeyword(data.results[0].alternatives[0].transcript)
         let digitEvent = digitRecognition(data.results[0].alternatives[0].transcript)
-        console.log('diggittttt evenety', digitEvent)
         if (digitEvent) {
-
           client.emit("digit", digitEvent)
-
         }
-        console.log('detecetd', detected)
           if (detected.found) {
               const response  = detected.eventName
               console.log('immediately send to client as word detected', response, data.results[0].alternatives[0].transcript)
