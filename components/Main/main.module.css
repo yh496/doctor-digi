@@ -40,7 +40,6 @@
 
 .sidePanel {
   display: grid;
-  grid-template-rows: 1fr 1fr;
   z-index: 100;
 }
 

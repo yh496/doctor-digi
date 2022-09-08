@@ -62,6 +62,7 @@ const Main = () => {
           depth,
           response: sttResponse,
         });
+
       if (nextScenario) {
         setScenario(nextScenario);
       }
@@ -73,10 +74,8 @@ const Main = () => {
       }
       if (nextChoices) {
         setChoices(nextChoices);
-        console.log("SET!");
       }
       setIsScenarioEnd(isEnd);
-
       const newChat = {
         aiText: speech,
         choices: nextChoices,
@@ -177,7 +176,6 @@ const Main = () => {
                 />
               </div>
               <div className={Styles.sidePanel}>
-                <div className={Styles.imgContainer}>ang</div>
                 <div className={Styles.chatInterface}>
                   <Choices
                     setHelpText={setHelpText}

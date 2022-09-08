@@ -6,7 +6,7 @@ import AudioStreamer from "../../lib/AudioHandler";
 const Choices = (props) => {
   const {
     setHelpText,
-    setRecording, 
+    setRecording,
     choices,
     chatState,
     setChatState,
@@ -30,7 +30,15 @@ const Choices = (props) => {
     "phsyiatrist",
   ];
 
-  const [selectedChoice, setSelectedChoice] = useState(null);
+  let messagesEnd = undefined;
+
+  const scrollToBottom = () => {
+    messagesEnd.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  });
 
   return (
     <div className={Styles.scroll}>
@@ -56,8 +64,6 @@ const Choices = (props) => {
                   className={Styles.choiceButton}
                   key={idx}
                   onClick={() => {
-                    console.log(choice);
-                    setSelectedChoice(choice);
                     let sttResponse = speechToEventMap.find((element) => {
                       if (choice.toLowerCase().includes(element)) {
                         return element;
@@ -69,9 +75,9 @@ const Choices = (props) => {
                       sttResponse;
                     setChatState(copyChatState);
                     setResponseTrigger(!responseTrigger);
-                    setRecording(false)
+                    setRecording(false);
                     AudioStreamer.stopRecording();
-                    setHelpText(sttResponse)
+                    setHelpText(sttResponse);
                   }}
                 >
                   {choice}
@@ -79,7 +85,7 @@ const Choices = (props) => {
               ))}
             </div>
             <div>
-              {dialogue.userText && (
+              {dialogue.userText && dialogue.userText != "start" && (
                 <div className={Styles.userFaceContainer}>
                   <div className={Styles.userTextContainer}>
                     <p className={Styles.textContainer}>
@@ -102,19 +108,12 @@ const Choices = (props) => {
           </>
         ))}
 
-        {/* {selectedChoice ? (
-        <div className={Styles.choiceContainer}>
-          <p>{selectedChoice}</p>
-          <img
-            className={Styles.userImage}
-            width={60}
-            height={60}
-            src="./user_face.png"
-          />
-        </div>
-      ) : (
-        <div />
-      )} */}
+        <div
+          style={{ float: "left", clear: "both" }}
+          ref={(el) => {
+            messagesEnd = el;
+          }}
+        ></div>
       </div>
     </div>
   );
