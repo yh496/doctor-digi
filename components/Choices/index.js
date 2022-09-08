@@ -107,7 +107,6 @@ const Choices = (props) => {
                     let sttResponse;
                     let userText;
                     Object.keys(speechToEventMap).forEach((element) => {
-                      console.log("elementtt", element, choice.toLowerCase());
                       if (element === choice.toLowerCase()) {
                         sttResponse = speechToEventMap[element];
                         userText = element;
@@ -123,6 +122,11 @@ const Choices = (props) => {
                     setHelpText(sttResponse);
                     AudioStreamer.timeOut = false;
                   }}
+                  disabled={
+                    chatState.indexOf(dialogue) == chatState.length - 1
+                      ? false
+                      : true
+                  }
                 >
                   {choice}
                 </button>
@@ -134,7 +138,6 @@ const Choices = (props) => {
                   <div className={Styles.userTextContainer}>
                     <p className={Styles.textContainer}>
                       {dialogue?.choices?.find((choice) => {
-                        console.log(dialogue.userText, "USER TEXT");
                         return choice.toLowerCase().includes(dialogue.userText)
                           ? choice
                           : "";

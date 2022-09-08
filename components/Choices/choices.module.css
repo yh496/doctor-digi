@@ -1,5 +1,3 @@
-
-
 .mainContainer {
   z-index: 20;
   display: flex;
@@ -13,7 +11,6 @@
   width: 600px;
   height: 600px;
   overflow-y: scroll;
-
 }
 
 .scroll {
@@ -21,7 +18,6 @@
   overflow: hidden;
   box-shadow: 0px 1px 10px 3px #1e90ff9e;
   margin-top: 0px;
-
 }
 
 .choiceContainer {
@@ -31,9 +27,8 @@
 }
 
 .choiceButton {
-    outline: none;
-    border: none; 
-    
+  outline: none;
+  border: none;
   padding: 5px 10px 5px 10px;
   margin: 5px;
   border-radius: 10px;
@@ -41,6 +36,11 @@
   background-color: #1e90ff9e;
   color: white;
   border-color: white;
+  cursor: pointer;
+}
+
+.choiceButton[disabled] {
+  cursor: default;
 }
 
 .digiSpeechContainer {
@@ -56,20 +56,17 @@
   align-items: center;
   padding: 15px;
   max-width: 90%;
-
 }
-
 
 .digiImageContainer {
   margin-right: 12px;
   width: 60px;
-
 }
 
 .digiImageContainer img {
-    border-radius: 100px;
-    height: 60px;
-    width: 60px;
+  border-radius: 100px;
+  height: 60px;
+  width: 60px;
 }
 
 .userImage {
@@ -96,25 +93,24 @@
   margin-bottom: 0;
 }
 
-
 .lower {
-    height: 10vh;
-    width: 100%;
-    display: flex;
-    padding-top: 5px;
-    background-color: #edf6f9;
-    z-index: 200;
-    display: flex;
-    flex-direction: column;
-  }
+  height: 10vh;
+  width: 100%;
+  display: flex;
+  padding-top: 5px;
+  background-color: #edf6f9;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+}
 .recordInterface {
-    display: grid;
-    place-items: center;
-    height: 60%;
-  }
-  
+  display: grid;
+  place-items: center;
+  height: 60%;
+}
+
 .helpText {
-    text-align: center;
-    font-size: 18px;
-    font-weight: 600;
-  }
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+}
