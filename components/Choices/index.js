@@ -78,6 +78,7 @@ const Choices = (props) => {
                     setRecording(false);
                     AudioStreamer.stopRecording();
                     setHelpText(sttResponse);
+                    AudioStreamer.timeOut = false;
                   }}
                 >
                   {choice}
