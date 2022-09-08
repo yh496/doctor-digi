@@ -8,7 +8,7 @@ const speechToEventMap = {
     "dentist": "dentist",
     "dermatologist": "dermatologist",
     "psychiatrist": "psychiatrist", 
-    "phsyiatrist": "phsyiatrist",
+    "physiatrist": "physiatrist",
 
     "check": "symptom",
     "text": "symptom",

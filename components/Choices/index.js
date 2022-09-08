@@ -112,8 +112,7 @@ const speechToEventMap = {
                 </button>
               ))}
             </div>
-            <div>
-              {dialogue.userText && dialogue.userText != "default" && (
+            {dialogue.userText && dialogue.userText != "default" && (<div>
                 <div className={Styles.userFaceContainer}>
                   <div className={Styles.userTextContainer}>
                     <p className={Styles.textContainer}>
@@ -132,8 +131,9 @@ const speechToEventMap = {
                     src="./user_face.png"
                   />
                 </div>
-              )}
+             
             </div>
+             )}
           </>
         ))}
 
