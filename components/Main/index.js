@@ -9,8 +9,6 @@ import { getNextResponse } from "../../lib/ResponseGenerator";
 
 import AudioStreamer from "../../lib/AudioHandler";
 
-import { AiTwotoneAudio } from "react-icons/ai";
-import { ConsoleSqlOutlined } from "@ant-design/icons";
 
 const Main = () => {
   const videoRef = useRef();
@@ -28,6 +26,8 @@ const Main = () => {
 
   const [scenario, setScenario] = useState("start");
   const [depth, setDepth] = useState(0);
+
+  const [digitEvent, setDigitEvent] = useState("")
 
   const [helpText, setHelpText] = useState("");
 
@@ -61,6 +61,7 @@ const Main = () => {
           scenario,
           depth,
           response: sttResponse,
+          digitEvent
         });
 
       if (nextScenario) {
@@ -143,11 +144,15 @@ const Main = () => {
     setHelpText(text);
   };
 
+  const onDigit = (event) => {
+    setDigitEvent(event)
+  }
+
   function startRecording() {
     console.log("audio start recording...", scenario);
     setRecording(true);
     setHelpText("Speak to Dr. Digi ...");
-    AudioStreamer.initRecording(recordingCallback, onTranscription, (error) => {
+    AudioStreamer.initRecording(recordingCallback, onTranscription, onDigit, (error) => {
       console.error("Error when recording", error);
     });
   }
@@ -205,22 +210,12 @@ const Main = () => {
                     setSttResponse={setSttResponse}
                     responseTrigger={responseTrigger}
                     setResponseTrigger={setResponseTrigger}
+                    recording={recording}
+                    helpText={helpText}
                   />
                 </div>
               </div>
             </div>
-          </div>
-          <div className={Styles.lower}>
-            <div className={Styles.recordInterface}>
-              <AiTwotoneAudio
-                style={{
-                  color: recording ? "red" : "black",
-                  height: "30px",
-                  width: "30px",
-                }}
-              />
-            </div>
-            <div className={Styles.helpText}>{helpText}</div>
           </div>
         </>
       )}

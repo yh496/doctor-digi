@@ -2,6 +2,7 @@ import Styles from "./choices.module.css";
 import React, { useState, useEffect, useRef } from "react";
 
 import AudioStreamer from "../../lib/AudioHandler";
+import { AiTwotoneAudio } from "react-icons/ai";
 
 const Choices = (props) => {
   const {
@@ -15,20 +16,62 @@ const Choices = (props) => {
     setSttResponse,
     responseTrigger,
     setResponseTrigger,
+    recording,
+    helpText,
     ...rest
   } = props;
 
-  const speechToEventMap = [
-    "appointment",
-    "yes",
-    "no",
-    "primary",
-    "physician",
-    "dentist",
-    "dermatologist",
-    "psychiatrist",
-    "phsyiatrist",
-  ];
+  const speechToEventMap = {
+    "schedule an appointment": "appointment",
+    appointment: "appointment",
+    "check symptoms": "symptom",
+    "drug info": "drugInfo",
+    yes: "yes",
+    no: "no",
+    primary: "primary",
+    "primary care physician": "primary",
+
+    physician: "physician",
+    dentist: "dentist",
+    dermatologist: "dermatologist",
+    psychiatrist: "psychiatrist",
+    phsyiatrist: "phsyiatrist",
+
+    check: "symptom",
+    text: "symptom",
+    symptoms: "symptom",
+    symptom: "symptom",
+
+    fever: "fever",
+    weather: "fever",
+    uber: "fever",
+    gilbert: "fever",
+    Gilbert: "fever",
+
+    skin: "skinCut",
+    cut: "skinCut",
+    ankle: "swollenAnkle",
+    swollen: "swollenAnkle",
+    "swollen ankle": "swollenAnkle",
+    drug: "drugInfo",
+    info: "drugInfo",
+
+    dose: "dosage",
+    usage: "dosage",
+    dosage: "dosage",
+    daily: "dosage",
+    "daily dose limit": "dosage",
+
+    general: "generalInfo",
+    "general information": "generalInfo",
+    interactions: "interaction",
+    interaction: "interaction",
+
+    advil: "advil",
+    allegra: "allegra",
+
+    "skin cut": "skinCut",
+  };
 
   let messagesEnd = undefined;
 
@@ -46,12 +89,9 @@ const Choices = (props) => {
         {chatState.map((dialogue, idx) => (
           <>
             <div className={Styles.digiContainer}>
-              <img
-                className={Styles.digiImage}
-                width={60}
-                height={60}
-                src="./digi_face.png"
-              />
+              <div className={Styles.digiImageContainer}>
+                <img src="./digi_face.png" />
+              </div>
               <div className={Styles.digiSpeechContainer}>
                 <p key={idx} style={{ textAlign: "left", marginBottom: 0 }}>
                   {dialogue.aiText}
@@ -64,15 +104,18 @@ const Choices = (props) => {
                   className={Styles.choiceButton}
                   key={idx}
                   onClick={() => {
-                    let sttResponse = speechToEventMap.find((element) => {
-                      if (choice.toLowerCase().includes(element)) {
-                        return element;
+                    let sttResponse;
+                    let userText;
+                    Object.keys(speechToEventMap).forEach((element) => {
+                      console.log("elementtt", element, choice.toLowerCase());
+                      if (element === choice.toLowerCase()) {
+                        sttResponse = speechToEventMap[element];
+                        userText = element;
                       }
                     });
                     setSttResponse(sttResponse);
                     let copyChatState = chatState;
-                    copyChatState[copyChatState.length - 1].userText =
-                      sttResponse;
+                    copyChatState[copyChatState.length - 1].userText = userText;
                     setChatState(copyChatState);
                     setResponseTrigger(!responseTrigger);
                     setRecording(false);
@@ -85,8 +128,8 @@ const Choices = (props) => {
                 </button>
               ))}
             </div>
-            <div>
-              {dialogue.userText && dialogue.userText != "default" && (
+            {dialogue.userText && dialogue.userText != "default" && (
+              <div>
                 <div className={Styles.userFaceContainer}>
                   <div className={Styles.userTextContainer}>
                     <p className={Styles.textContainer}>
@@ -105,8 +148,8 @@ const Choices = (props) => {
                     src="./user_face.png"
                   />
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </>
         ))}
 
@@ -116,6 +159,18 @@ const Choices = (props) => {
             messagesEnd = el;
           }}
         ></div>
+      </div>
+      <div className={Styles.lower}>
+        <div className={Styles.recordInterface}>
+          <AiTwotoneAudio
+            style={{
+              color: recording ? "red" : "black",
+              height: "30px",
+              width: "30px",
+            }}
+          />
+        </div>
+        <div className={Styles.helpText}>{helpText}</div>
       </div>
     </div>
   );

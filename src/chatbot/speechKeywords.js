@@ -4,11 +4,46 @@ const speechToEventMap = {
     "yes": "yes",
     "no": "no",
     "primary": "primary",
-    "physician": "physician", 
+    "physician": "primary", 
     "dentist": "dentist",
     "dermatologist": "dermatologist",
     "psychiatrist": "psychiatrist", 
-    "phsyiatrist": "phsyiatrist"
+    "physiatrist": "physiatrist",
+
+    "check": "symptom",
+    "text": "symptom",
+    "symptoms": "symptom",
+    "symptom": "symptom",
+
+    "fever": "fever",
+    "weather": "fever",
+    "uber": "fever",
+    "gilbert":"fever",
+    "Gilbert":"fever",
+
+    "skin": "skinCut",
+    "cut": "skinCut",
+    "ankle": "swollenAnkle",
+    "swollen": "swollenAnkle",
+
+    "drug": "drugInfo",
+    "info": "drugInfo",
+
+    "dose": "dosage",
+    "usage": "dosage",
+    "dosage": "dosage",
+    "daily": "dosage",
+
+    "general": "generalInfo",
+    "interactions":"interaction",
+    "interaction": "interaction",
+
+    "Advil": "advil",
+    "advil": "advil",
+    "Allegra": "allegra",
+    "allegra": "allegra",
+    
+    
 } 
 
 module.exports = speechToEventMap
