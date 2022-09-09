@@ -1,13 +1,17 @@
 const speech = require('@google-cloud/speech');
 const speechToEventMap = require('./chatbot/speechKeywords')
 
+const boostWords = require('./chatbot/boost');
+
+console.log('boostawords', boostWords)
+
 let speechClient = new speech.SpeechClient({
   credentials: require(process.env.GOOGLE_APPLICATION_CREDENTIALS)
 });
 
 console.log(Object.keys(speechToEventMap))
 const speechContextsElement = {
-  phrases: Object.keys(speechToEventMap),
+  phrases: boostWords,
   boost: 20.0,
 };
 

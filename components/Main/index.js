@@ -57,6 +57,7 @@ const Main = () => {
   ]);
 
   const turnOffDigi = () => {
+    setIsOff(false);
     setStartDigi(false);
     setVideoUrl("/digi_videos/starters/starter1.webm");
     setScenario("start");
