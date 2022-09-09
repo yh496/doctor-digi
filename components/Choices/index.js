@@ -100,38 +100,40 @@ const Choices = (props) => {
               </div>
             </div>
             <div className={Styles.choiceContainer}>
-              {dialogue?.choices?.map((choice, idx) => (
-                <button
-                  className={Styles.choiceButton}
-                  key={idx}
-                  onClick={() => {
-                    let sttResponse;
-                    let userText;
-                    Object.keys(speechToEventMap).forEach((element) => {
-                      if (element === choice.toLowerCase()) {
-                        sttResponse = speechToEventMap[element];
-                        userText = element;
-                      }
-                    });
-                    setSttResponse(sttResponse);
-                    let copyChatState = chatState;
-                    copyChatState[copyChatState.length - 1].userText = userText;
-                    setChatState(copyChatState);
-                    setResponseTrigger(!responseTrigger);
-                    setRecording(false);
-                    AudioStreamer.stopRecording();
-                    setHelpText(sttResponse);
-                    AudioStreamer.timeOut = false;
-                  }}
-                  disabled={
-                    chatState.indexOf(dialogue) == chatState.length - 1
-                      ? false
-                      : true
-                  }
-                >
-                  {choice}
-                </button>
-              ))}
+              {!dialogue.aiText.startsWith("Great! I hope you feel better") &&
+                dialogue?.choices?.map((choice, idx) => (
+                  <button
+                    className={Styles.choiceButton}
+                    key={idx}
+                    onClick={() => {
+                      let sttResponse;
+                      let userText;
+                      Object.keys(speechToEventMap).forEach((element) => {
+                        if (element === choice.toLowerCase()) {
+                          sttResponse = speechToEventMap[element];
+                          userText = element;
+                        }
+                      });
+                      setSttResponse(sttResponse);
+                      let copyChatState = chatState;
+                      copyChatState[copyChatState.length - 1].userText =
+                        userText;
+                      setChatState(copyChatState);
+                      setResponseTrigger(!responseTrigger);
+                      setRecording(false);
+                      AudioStreamer.stopRecording();
+                      setHelpText(sttResponse);
+                      AudioStreamer.timeOut = false;
+                    }}
+                    disabled={
+                      chatState.indexOf(dialogue) == chatState.length - 1
+                        ? false
+                        : true
+                    }
+                  >
+                    {choice}
+                  </button>
+                ))}
             </div>
             {dialogue.userText && dialogue.userText != "default" && (
               <div>
@@ -139,7 +141,12 @@ const Choices = (props) => {
                   <div className={Styles.userTextContainer}>
                     <p className={Styles.textContainer}>
                       {dialogue?.choices?.find((choice) => {
-                        return choice.toLowerCase().includes(dialogue.userText)
+                        return choice
+                          .toLowerCase()
+                          .replace(/ /g, "")
+                          .includes(
+                            dialogue.userText.toLowerCase().replace(/ /g, "")
+                          )
                           ? choice
                           : "";
                       })}

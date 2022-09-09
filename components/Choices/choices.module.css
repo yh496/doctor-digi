@@ -6,6 +6,7 @@
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
   padding: 30px 30px 30px 30px;
+  font-family: Avenir;
   font-size: 18px;
   right: 50px;
   width: 100%;
@@ -114,4 +115,5 @@
   text-align: center;
   font-size: 18px;
   font-weight: 600;
+  font-family: Avenir;
 }
