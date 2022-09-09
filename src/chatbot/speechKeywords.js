@@ -35,6 +35,7 @@ const speechToEventMap = {
     "usage": "dosage",
     "dosage": "dosage",
     "daily": "dosage",
+    "limit": "dosage",
 
     "general": "generalInfo",
     "general information": "generalInfo",
