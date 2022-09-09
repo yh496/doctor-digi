@@ -6,12 +6,16 @@ const Start = (props) => {
 
     return ( 
         <div className={Styles.background}>
+       
             <div className={Styles.content}> 
+                <div className={Styles.logoContainer}>
+                    <img style={{opacity: 0.8}} src="/digi_logo.png"/>
+                </div>
                 <button 
                     onClick={onClick}
                     className={Styles.startButton}
                 >
-                    Talk to Doctor Digi
+                    Get Started
                 </button>
                 <div className={Styles.info}>
                     <p>Please make sure you have permission enabled for mic access</p>

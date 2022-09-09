@@ -200,7 +200,8 @@ const Main = () => {
               <div className={Styles.digiContainer}>
                 <video
                   className={Styles.video}
-                  height="700px"
+      
+                  width="150%"
                   onEnded={onVideoEnd}
                   src={videoUrl}
                   autoPlay

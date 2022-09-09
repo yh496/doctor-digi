@@ -6,13 +6,32 @@
     display:grid; 
     place-items: center;
     z-index:10; 
-    background: rgba(247,247,247,0.8);
+    background: rgba(255,255,255,0.6);
+}
+
+.logoContainer {
+    margin-bottom: 30px;
+    height: 200px; 
+    display: grid; 
+    place-items: center;
+    border-radius: 150px;
+    width: 100%;
+    background: white;
+    animation: fadeIn 3s;
+
+
+}
+
+.logoContainer img {
+    border-radius: 150px;
+    height: 200px;
 }
 
 .content {
     display: grid; 
     place-items: center;
-    width: 300px;
+    width: 400px;
+
 }
 
 .startButton {
@@ -21,6 +40,7 @@
     cursor: pointer;
     background-color: dodgerblue;
     color: white;
+    font-size: 20px; 
     font-weight: bold;
     border: none;
     box-shadow: 0px 1px 10px 3px grey;
@@ -32,6 +52,13 @@
     place-items: center;
     text-align: center; 
     color: grey;
-    line-height: 26px;
+    line-height: 20px;
+    width: 80%;
 }
 
+
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
