@@ -20,6 +20,8 @@ const Main = () => {
 
   const [responseTrigger, setResponseTrigger] = useState(false);
   const [isScenarioEnd, setIsScenarioEnd] = useState(false);
+  const [isOff, setIsOff] = useState(false);
+
   const [recording, setRecording] = useState(false);
 
   const [isAISpeaking, setIsAISpeaking] = useState(true);
@@ -54,14 +56,30 @@ const Main = () => {
     },
   ]);
 
+  const turnOffDigi = () => {
+    setStartDigi(false);
+    setVideoUrl("/digi_videos/starters/starter1.webm");
+    setScenario("start");
+    setDepth(0);
+    setChoices(["Schedule an Appointment", "Check Symptoms", "Drug Info"]);
+    setChatState([
+      {
+        aiText: "Hello! What can I help you with today?",
+        choices: ["Schedule an Appointment", "Check Symptoms", "Drug Info"],
+        userText: "",
+      },
+    ]);
+}
+
+
   useEffect(() => {
     if (sttResponse) {
-      const { nextScenario, nextDepth, video, nextChoices, isEnd, speech } =
+      const { nextScenario, nextDepth, video, nextChoices, isEnd, isOff, speech } =
         getNextResponse({
           scenario,
           depth,
           response: sttResponse,
-          digitEvent
+          digitEvent,
         });
 
       if (nextScenario) {
@@ -77,6 +95,7 @@ const Main = () => {
         setChoices(nextChoices);
       }
       setIsScenarioEnd(isEnd);
+      setIsOff(isOff)
       const newChat = {
         aiText: speech,
         choices: nextChoices,
@@ -94,18 +113,7 @@ const Main = () => {
 
   useEffect(() => {
     if (AudioStreamer.timeOut) {
-      setStartDigi(false);
-      setVideoUrl("/digi_videos/starters/starter1.webm");
-      setScenario("start");
-      setDepth(0);
-      setChoices(["Schedule an Appointment", "Check Symptoms", "Drug Info"]);
-      setChatState([
-        {
-          aiText: "Hello! What can I help you with today?",
-          choices: ["Schedule an Appointment", "Check Symptoms", "Drug Info"],
-          userText: "",
-        },
-      ]);
+      turnOffDigi();
     }
   }, [videoLoop]);
 
@@ -168,7 +176,9 @@ const Main = () => {
     setIsAISpeaking(false);
     if (isScenarioEnd) {
       startFromBeginning();
-    } else {
+    } else if (isOff) {
+      turnOffDigi();
+    }else {
       startRecording();
       onVideoChange("/digi_videos/idle_v1.webm", true);
     }
