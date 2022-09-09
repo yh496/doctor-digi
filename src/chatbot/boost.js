@@ -15,7 +15,11 @@ boost = [
     "advil",
     "allegra",
     "skin cut",
-    "swollen ankle"
+    "swollen ankle",
+    "daily dose limit",
+    "general",
+    "general information",
+    "interactions"
 ]
 
 module.exports = boost

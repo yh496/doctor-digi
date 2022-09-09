@@ -30,7 +30,6 @@ const speechToEventMap = {
     "swollen": "swollenAnkle",
 
     "drug": "drugInfo",
-    "info": "drugInfo",
 
     "dose": "dosage",
     "usage": "dosage",
@@ -38,6 +37,7 @@ const speechToEventMap = {
     "daily": "dosage",
 
     "general": "generalInfo",
+    "general information": "generalInfo",
     "interactions":"interaction",
     "interaction": "interaction",
 
