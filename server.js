@@ -24,12 +24,12 @@ const https_port = process.env.HTTPS_PORT || 8443;
 let https_options; 
 
 console.log('hostname', process.env.HOSTNAME)
-console.log('does it exist', fs.existsSync(`/etc/letsencrypt/live/${process.env.HOSTNAME}/privkey.pem`))
-if(fs.existsSync(`/etc/letsencrypt/live/${process.env.HOSTNAME}/privkey.pem`)){
+console.log('does it exist', fs.existsSync(`./privkey.pem`))
+if(fs.existsSync(`./privkey.pem`)){
 	https_options = {
-		key: fs.readFileSync(`/etc/letsencrypt/live/${process.env.HOSTNAME}/privkey.pem`),
-		cert: fs.readFileSync(`/etc/letsencrypt/live/${process.env.HOSTNAME}/cert.pem`),
-		ca: fs.readFileSync(`/etc/letsencrypt/live/${process.env.HOSTNAME}/chain.pem`)
+		key: fs.readFileSync(`./privkey.pem`),
+		cert: fs.readFileSync(`./cert.pem`),
+		ca: fs.readFileSync(`./chain.pem`)
 	}
 }
 
