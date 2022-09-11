@@ -186,7 +186,6 @@ const Main = () => {
     copyChatState[copyChatState.length - 1].userText = event ?? transcript;
     setChatState(copyChatState);
 
-    console.log('hell,loo',copyChatState)
     setResponseTrigger(!responseTrigger);
     setRecording(false);
     if (socketRef.current !== null) {
@@ -196,6 +195,7 @@ const Main = () => {
   }
 
   const socketRef = useRef(null);
+
     
   const activateMicrophone = ( ) => {
       navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
@@ -299,6 +299,7 @@ const Main = () => {
                     setResponseTrigger={setResponseTrigger}
                     recording={recording}
                     helpText={helpText}
+                    socketRef={socketRef}
                   />
                 </div>
               </div>

@@ -1,7 +1,6 @@
 import Styles from "./choices.module.css";
 import React, { useState, useEffect, useRef } from "react";
 
-import AudioStreamer from "../../lib/AudioHandler";
 import { AiTwotoneAudio } from "react-icons/ai";
 
 const Choices = (props) => {
@@ -18,6 +17,7 @@ const Choices = (props) => {
     setResponseTrigger,
     recording,
     helpText,
+    socketRef,
     ...rest
   } = props;
 
@@ -87,6 +87,39 @@ const Choices = (props) => {
   return (
     <div className={Styles.scroll}>
       <div className={Styles.mainContainer} ref={choicesRef}>
+        <div className={Styles.digiContainer}>
+              <div className={Styles.digiImageContainer}>
+                <img src="./digi_face.png" />
+              </div>
+              <div className={Styles.digiSpeechContainer}>
+                <p style={{  textAlign: "left", marginBottom: 0 }}>
+                  Please speak into the mic when the icon in the bottom of this chatbox turns red! 
+                  
+                </p>
+                <div style={{display: "flex", flexDirection: "column"}}> 
+                  <div style={{display: "flex", flexDirection: "row",marginTop: "10px"}}> 
+                  <AiTwotoneAudio
+                      style={{
+                        color: "black",
+                        height: "30px",
+                        width: "30px",
+                      }}
+                    />
+                    <span style={{fontWeight:600}}>:Dr. DiGi is speaking </span> 
+                    </div>
+                    <div style={{display: "flex", flexDirection: "row", marginTop: "10px"}}> 
+                    <AiTwotoneAudio
+                      style={{
+                        color: "red",
+                        height: "30px",
+                        width: "30px",
+                      }}
+                    />
+                    <span style={{fontWeight:600}}>:Recording your voice </span> 
+                    </div>
+                </div>
+              </div>
+            </div>
         {chatState.map((dialogue, idx) => (
           <>
             <div className={Styles.digiContainer}>
@@ -121,9 +154,10 @@ const Choices = (props) => {
                       setChatState(copyChatState);
                       setResponseTrigger(!responseTrigger);
                       setRecording(false);
-                      AudioStreamer.stopRecording();
                       setHelpText(sttResponse);
-                      AudioStreamer.timeOut = false;
+                      if (socketRef.current !== null) {
+                        socketRef.current.close()
+                      }   
                     }}
                     disabled={
                       chatState.indexOf(dialogue) == chatState.length - 1
