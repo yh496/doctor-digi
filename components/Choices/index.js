@@ -141,6 +141,7 @@ const Choices = (props) => {
                   <div className={Styles.userTextContainer}>
                     <p className={Styles.textContainer}>
                       {dialogue?.choices?.find((choice) => {
+                        if (choice == "Daily Dose Limit") choice = "dosage";
                         return choice
                           .toLowerCase()
                           .replace(/ /g, "")
