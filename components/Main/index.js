@@ -9,6 +9,8 @@ import { getNextResponse } from "../../lib/ResponseGenerator";
 
 import AudioStreamer from "../../lib/AudioHandler";
 
+import speechToEventMap from "../../lib/SpeechKeywords";
+
 
 const Main = () => {
   const videoRef = useRef();
@@ -140,30 +142,103 @@ const Main = () => {
     }
   };
 
-  const recordingCallback = (sttResponse) => {
-    setSttResponse(sttResponse);
-    let copyChatState = chatState;
-    copyChatState[copyChatState.length - 1].userText = sttResponse;
-    setChatState(copyChatState);
-    setResponseTrigger(!responseTrigger);
-    setRecording(false);
-  };
-
-  const onTranscription = (text) => {
-    setHelpText(text);
-  };
-
-  const onDigit = (event) => {
-    setDigitEvent(event)
+  const getEvent = (transcript) => {
+    for (const [key, value] of Object.entries(speechToEventMap)) {
+      const regex = new RegExp(key,"g")
+      if (transcript.toLowerCase().match(regex)) {
+        return value
+      }
+    } 
+    return "default"
   }
 
-  function startRecording() {
-    console.log("audio start recording...", scenario);
-    setRecording(true);
-    setHelpText("Speak to Dr. Digi ...");
-    AudioStreamer.initRecording(recordingCallback, onTranscription, onDigit, (error) => {
-      console.error("Error when recording", error);
-    });
+  function digitRecognition(speech) {
+    let digit = parseFloat(speech.match(/[\d\.]+/));
+    console.log('digit1', digit)
+  
+    if (digit === 1|| digit === 2 || digit === 3) {
+      return "low"
+    }
+    if (digit === 4|| digit === 5 || digit === 6) {
+      return "mid"
+    }
+    if (digit === 7|| digit === 8 || digit === 9) {
+      return "high"
+    }
+    if (digit < 98.9) { 
+      return "normal"
+    }
+    if (digit >= 98.9) { 
+      return "high"
+    }
+  
+    return null
+  
+  }
+
+  const onSpeechFinal = (transcript) => {
+    const event = getEvent(transcript);
+    const digitEvent = digitRecognition(transcript)
+    setDigitEvent(digitEvent)
+
+    setSttResponse(event);
+    let copyChatState = chatState;
+    copyChatState[copyChatState.length - 1].userText = event ?? transcript;
+    setChatState(copyChatState);
+
+    console.log('hell,loo',copyChatState)
+    setResponseTrigger(!responseTrigger);
+    setRecording(false);
+    if (socketRef.current !== null) {
+      socketRef.current.close()
+    }   
+
+  }
+
+  const socketRef = useRef(null);
+    
+  const activateMicrophone = ( ) => {
+      navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+          setRecording(true);
+          const mediaRecorder = new MediaRecorder(stream)
+          const socket = new WebSocket('ws://localhost:3002')
+
+          socket.onopen = () => {
+              console.log({ event: 'onopen' })
+              mediaRecorder.addEventListener('dataavailable', async (event) => {
+                  if (event.data.size > 0 && socket.readyState === 1) {
+                      socket.send(event.data)
+                  }
+              })
+              mediaRecorder.start(1000)
+          }
+
+          socket.onmessage = (message) => {
+              const received = JSON.parse(message.data)
+              const transcript = received.channel.alternatives[0].transcript
+              if (transcript) {
+                setHelpText(transcript)
+              }
+              if (received.speech_final) {
+                  console.log('transcriptttranscript', received.speech_final)
+                  onSpeechFinal(transcript)
+                  // recordingCallback(transcript);
+                  // onTranscription(transcript)
+              }
+          }
+
+          socket.onclose = () => {
+              console.log({ event: 'onclose' })
+          }
+
+          socket.onerror = (error) => {
+              console.log({ event: 'onerror', error })
+          }
+
+          socketRef.current = socket
+      })    
+
+      
   }
 
   const startFromBeginning = () => {
@@ -180,7 +255,7 @@ const Main = () => {
     } else if (isOff) {
       turnOffDigi();
     }else {
-      startRecording();
+      activateMicrophone();
       onVideoChange("/digi_videos/idle_v1.webm", true);
     }
   };

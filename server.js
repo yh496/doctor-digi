@@ -23,8 +23,6 @@ const https_port = process.env.HTTPS_PORT || 8443;
 
 let https_options; 
 
-console.log('hostname', process.env.HOSTNAME)
-console.log('does it exist', fs.existsSync(`./privkey.pem`))
 if(fs.existsSync(`./privkey.pem`)){
 	https_options = {
 		key: fs.readFileSync(`./privkey.pem`),
@@ -69,6 +67,7 @@ app.prepare().then(() => {
 	console.log('node env', process.env.NODE_ENV)
 
 	const socket_server = process.env.NODE_ENV === 'production' ? https_server : http_server
+	require("./src/deepgramSocket")
 	require('./src/socket')(socket_server)
 	
 

@@ -135,7 +135,7 @@ const Choices = (props) => {
                   </button>
                 ))}
             </div>
-            {dialogue.userText && dialogue.userText != "default" && (
+            {dialogue.userText && dialogue.userText !== "default" && (
               <div>
                 <div className={Styles.userFaceContainer}>
                   <div className={Styles.userTextContainer}>
