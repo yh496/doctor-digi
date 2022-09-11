@@ -16,7 +16,9 @@ boost = [
     "allegra",
     "skin cut",
     "swollen ankle",
+    "daily",
     "daily dose limit",
+    "daily dose",
     "general",
     "general information",
     "interactions"
