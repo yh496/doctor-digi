@@ -201,7 +201,7 @@ const Main = () => {
       navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
           setRecording(true);
           const mediaRecorder = new MediaRecorder(stream)
-          const socket = new WebSocket('ws://localhost:3002')
+          const socket = new WebSocket(`${window.location.origin.replace("https","wss").replace("http", "ws").replace("3000", "3002").replace("8443", "3002")}`)
 
           socket.onopen = () => {
               console.log({ event: 'onopen' })
