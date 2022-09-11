@@ -94,18 +94,20 @@ const Main = () => {
       if (video) {
         onVideoChange(video, 0);
       }
+      const newChat = {
+        aiText: speech,
+      };
       if (nextChoices) {
         setChoices(nextChoices);
+        newChat["choices"] = nextChoices
       }
       setIsScenarioEnd(isEnd);
       setIsOff(isOff)
-      const newChat = {
-        aiText: speech,
-        choices: nextChoices,
-      };
+      
       let copyChatState = chatState;
       copyChatState.push(newChat);
       setChatState(copyChatState);
+
     }
   }, [responseTrigger]);
 
@@ -149,12 +151,11 @@ const Main = () => {
         return value
       }
     } 
-    return "default"
+    return {event: "default"} 
   }
 
   function digitRecognition(speech) {
     let digit = parseFloat(speech.match(/[\d\.]+/));
-    console.log('digit1', digit)
   
     if (digit === 1|| digit === 2 || digit === 3) {
       return "low"
@@ -177,13 +178,10 @@ const Main = () => {
   }
 
   const onSpeechFinal = (transcript) => {
-    const event = getEvent(transcript);
-    const digitEvent = digitRecognition(transcript)
-    setDigitEvent(digitEvent)
-
-    setSttResponse(event);
+    const response = getEvent(transcript);
+    setSttResponse(response.event);
     let copyChatState = chatState;
-    copyChatState[copyChatState.length - 1].userText = event ?? transcript;
+    copyChatState[copyChatState.length - 1].userText = response.label ?? transcript;
     setChatState(copyChatState);
 
     setResponseTrigger(!responseTrigger);
@@ -219,8 +217,9 @@ const Main = () => {
               if (transcript) {
                 setHelpText(transcript)
               }
+              const digitEvent = digitRecognition(transcript)
+              setDigitEvent(digitEvent)
               if (received.speech_final) {
-                  console.log('transcriptttranscript', received.speech_final)
                   onSpeechFinal(transcript)
                   // recordingCallback(transcript);
                   // onTranscription(transcript)

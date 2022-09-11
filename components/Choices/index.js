@@ -2,6 +2,7 @@ import Styles from "./choices.module.css";
 import React, { useState, useEffect, useRef } from "react";
 
 import { AiTwotoneAudio } from "react-icons/ai";
+import speechToEventMap from "../../lib/SpeechKeywords";
 
 const Choices = (props) => {
   const {
@@ -21,58 +22,8 @@ const Choices = (props) => {
     ...rest
   } = props;
 
-  const speechToEventMap = {
-    "schedule an appointment": "appointment",
-    appointment: "appointment",
-    "check symptoms": "symptom",
-    "drug info": "drugInfo",
-    yes: "yes",
-    no: "no",
-    primary: "primary",
-    "primary care physician": "primary",
 
-    physician: "physician",
-    dentist: "dentist",
-    dermatologist: "dermatologist",
-    psychiatrist: "psychiatrist",
-    phsyiatrist: "phsyiatrist",
 
-    check: "symptom",
-    text: "symptom",
-    symptoms: "symptom",
-    symptom: "symptom",
-
-    fever: "fever",
-    weather: "fever",
-    uber: "fever",
-    gilbert: "fever",
-    Gilbert: "fever",
-
-    skin: "skinCut",
-    cut: "skinCut",
-    ankle: "swollenAnkle",
-    swollen: "swollenAnkle",
-    "swollen ankle": "swollenAnkle",
-    drug: "drugInfo",
-    info: "drugInfo",
-
-    dose: "dosage",
-    usage: "dosage",
-    dosage: "dosage",
-    daily: "dosage",
-    "daily dose limit": "dosage",
-
-    general: "generalInfo",
-    "general information": "generalInfo",
-    "drug info": "drugInfo",
-    interactions: "interaction",
-    interaction: "interaction",
-
-    advil: "advil",
-    allegra: "allegra",
-
-    "skin cut": "skinCut",
-  };
 
   let messagesEnd = undefined;
 
@@ -83,6 +34,19 @@ const Choices = (props) => {
   useEffect(() => {
     scrollToBottom();
   });
+
+
+  const findResponse = (choices, userText) => {
+    let chatResponse = userText
+    if (choices?.length > 0) { 
+      choices?.map((choice, i) => {
+        if (speechToEventMap[choice]) {
+          chatResponse = speechToEventMap[choice.toLowerCase().replace(/ /g, "")].label
+        }
+      })
+    }
+    return chatResponse
+  }
 
   return (
     <div className={Styles.scroll}>
@@ -143,8 +107,8 @@ const Choices = (props) => {
                       let userText;
                       Object.keys(speechToEventMap).forEach((element) => {
                         if (element === choice.toLowerCase()) {
-                          sttResponse = speechToEventMap[element];
-                          userText = element;
+                          sttResponse = speechToEventMap[element].event;
+                          userText = speechToEventMap[element].label;
                         }
                       });
                       setSttResponse(sttResponse);
@@ -174,17 +138,7 @@ const Choices = (props) => {
                 <div className={Styles.userFaceContainer}>
                   <div className={Styles.userTextContainer}>
                     <p className={Styles.textContainer}>
-                      {dialogue?.choices?.find((choice) => {
-                        if (choice == "Daily Dose Limit") choice = "dosage";
-                        return choice
-                          .toLowerCase()
-                          .replace(/ /g, "")
-                          .includes(
-                            dialogue.userText.toLowerCase().replace(/ /g, "")
-                          )
-                          ? choice
-                          : "";
-                      })}
+                      {findResponse(dialogue.choices, dialogue.userText)}
                     </p>
                   </div>
                   <img

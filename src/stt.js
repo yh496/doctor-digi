@@ -3,8 +3,6 @@ const speechToEventMap = require('./chatbot/speechKeywords')
 
 const boostWords = require('./chatbot/boost');
 
-console.log('boostawords', boostWords)
-
 let speechClient = new speech.SpeechClient({
   credentials: require(process.env.GOOGLE_APPLICATION_CREDENTIALS)
 });
