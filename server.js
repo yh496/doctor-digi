@@ -67,8 +67,8 @@ app.prepare().then(() => {
 	console.log('node env', process.env.NODE_ENV)
 
 	const socket_server = process.env.NODE_ENV === 'production' ? https_server : http_server
-	require("./src/deepgramSocket")
-	require('./src/socket')(socket_server)
+	require("./src/deepgramSocket")(socket_server)
+	// require('./src/socket')(socket_server)
 	
 
 
